@@ -3,20 +3,22 @@ import { AddInitialTick } from 'tick-manager';
 export interface IViewportDetails {
 	width: number;
 	height: number;
+	heightCollapsedControls: number;
 	scrollX: number;
 	scrollY: number;
 	resized: boolean;
 	scrolled: boolean;
 }
 
-// A psuedo element is used to calculate height as the window.height value changes
+// A psuedo element is used to calculate heightCollapsedControls as the window.height value changes
 // on iOS as the user scrolls and the browser chrome shrinks
 const vhElem: HTMLElement = addHeightElement();
 
 // State
 let initialised: boolean = false;
 let width: number = window.innerWidth;
-let height: number = vhElem.offsetHeight;
+let heightCollapsedControls: number = vhElem.offsetHeight;
+let height: number = window.innerHeight;
 let scrollX: number = window.pageXOffset;
 let scrollY: number = window.pageYOffset;
 let resized: boolean = false;
@@ -24,7 +26,7 @@ let scrolled: boolean = false;
 
 // Previous State
 let previousWidth: number = width;
-let previousHeight: number = height;
+let previousHeight: number = heightCollapsedControls;
 let previousScrollX: number = scrollX;
 let previousScrollY: number = scrollY;
 
@@ -38,6 +40,7 @@ export function GetViewportDetails(): IViewportDetails {
 	return {
 		width,
 		height,
+		heightCollapsedControls,
 		scrollX,
 		scrollY,
 		resized,
@@ -49,7 +52,8 @@ export function GetViewportDetails(): IViewportDetails {
 function setDetails(): void {
 	// Set current
 	width = window.innerWidth;
-	height = vhElem.offsetHeight;
+	height = window.innerHeight;
+	heightCollapsedControls = vhElem.offsetHeight;
 	scrollX = window.pageXOffset;
 	scrollY = window.pageYOffset;
 

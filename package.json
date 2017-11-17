@@ -1,28 +1,42 @@
 {
-  "name": "viewport-details",
-  "version": "1.0.0",
-  "description": "'Get cached viewport information each animation frame'",
-  "main": "index.js",
-  "author": "Ben Meyrick <bameyrick@gmail.com>",
-  "license": "MIT",
-  "scripts": {
+	"name": "viewport-details",
+	"version": "1.0.0",
+	"description": "'Get cached viewport information each animation frame'",
+	"author": "Ben Meyrick <bameyrick@gmail.com>",
+	"license": "MIT",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"keywords": ["viewport", "details", "vh"],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/bameyrick/viewport-details.git"
+	},
+	"scripts": {
 		"lint": "tslint --project src/*.ts",
 		"lint-staged": "lint-staged",
-    "precommit": "lint-staged",
-    "prepublishOnly": "npm run lint && tsc -p ./ --outDir dist/",
-    "post-commit": "npm run prepublishOnly",
+		"precommit": "lint-staged",
+		"prepublishOnly": "npm run lint && tsc -p ./ --outDir dist/",
+		"post-commit": "npm run prepublishOnly",
 		"tslint-check": "tslint-config-prettier-check ./tslint.json"
 	},
-  "devDependencies": {
-    "husky": "^0.14.3",
-    "lint-staged": "^5.0.0",
-    "prettier": "^1.8.2",
-    "tslint": "^5.8.0",
-    "tslint-config-prettier": "^1.6.0",
-    "tslint-plugin-prettier": "^1.3.0",
-    "typescript": "^2.6.1"
-  },
-  "dependencies": {
-    "tick-manager": "^1.0.2"
-  }
+	"lint-staged": {
+		"*.ts": [
+			"tslint --project",
+			"prettier --print-width 140 --use-tabs --single-quote --trailing-comma es5 --parser typescript --write",
+			"git add"
+		],
+		"*.json": ["prettier --print-width 140 --use-tabs --single-quote --trailing-comma es5 --parser json --write", "git add"]
+	},
+	"devDependencies": {
+		"husky": "^0.14.3",
+		"lint-staged": "^5.0.0",
+		"prettier": "^1.8.2",
+		"tslint": "^5.8.0",
+		"tslint-config-prettier": "^1.6.0",
+		"tslint-plugin-prettier": "^1.3.0",
+		"typescript": "^2.6.1"
+	},
+	"dependencies": {
+		"tick-manager": "^1.0.2"
+	}
 }
