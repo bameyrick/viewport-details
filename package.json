@@ -9,9 +9,9 @@
 		"lint": "tslint --project src/*.ts",
 		"lint-staged": "lint-staged",
     "precommit": "lint-staged",
-    "post-commit": "prepublishOnly",
-		"tslint-check": "tslint-config-prettier-check ./tslint.json",
-		"prepublishOnly": "npm run lint && tsc -p ./ --outDir dist/"
+    "prepublishOnly": "npm run lint && tsc -p ./ --outDir dist/",
+    "post-commit": "npm run prepublishOnly",
+		"tslint-check": "tslint-config-prettier-check ./tslint.json"
 	},
   "devDependencies": {
     "husky": "^0.14.3",
