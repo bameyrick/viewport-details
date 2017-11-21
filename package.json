@@ -1,6 +1,6 @@
 {
 	"name": "viewport-details",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "'Get cached viewport information each animation frame'",
 	"author": "Ben Meyrick <bameyrick@gmail.com>",
 	"license": "MIT",
@@ -15,7 +15,7 @@
 		"lint": "tslint --project src/*.ts",
 		"lint-staged": "lint-staged",
 		"precommit": "lint-staged",
-		"prepublishOnly": "npm run lint && tsc -p ./ --outDir dist/",
+		"prepublishOnly": "rm -rf ./dist && npm run lint && tsc -p ./ --outDir dist/",
 		"postcommit": "npm run prepublishOnly",
 		"tslint-check": "tslint-config-prettier-check ./tslint.json"
 	},
@@ -37,6 +37,6 @@
 		"typescript": "^2.6.1"
 	},
 	"dependencies": {
-		"tick-manager": "^1.0.2"
+		"tick-manager": "^1.0.3"
 	}
 }
