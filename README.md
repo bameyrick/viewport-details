@@ -47,6 +47,10 @@ _**resized**_ represents whether the viewport resized since the previous animati
 
 _**scrolled**_ represents whether the viewport scrolled since the previous animation frame.
 
-_**scrollDirectionX**_ Represents a the direction of scroll. 0 means no movement, 1 means scrolling to the right, and -1 means scrolling to the left.
+_**scrollDirectionX**_ Represents a the direction of scroll. 0 means no movement, 1 means scrolling to the right, and -1 means scrolling to the left. 
+
+If you're using TypeScript an enum (EScrollDirectionX) is also available, with the options None, Right, and Left.
 
 _**scrollDirectionY**_ Represents a the direction of scroll. 0 means no movement, 1 means scrolling down, and -1 means scrolling up.
+
+If you're using TypeScript an enum (EScrollDirectionY) is also available, with the options None, Up, and Down.

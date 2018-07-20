@@ -8,8 +8,20 @@ export interface IViewportDetails {
 	scrollY: number;
 	resized: boolean;
 	scrolled: boolean;
-	scrollDirectionX: number;
-	scrollDirectionY: number;
+	scrollDirectionX: EScrollDirectionX;
+	scrollDirectionY: EScrollDirectionY;
+}
+
+export enum EScrollDirectionX {
+	Left = -1,
+	None = 0,
+	Right = 1,
+}
+
+export enum EScrollDirectionY {
+	Up = -1,
+	None = 0,
+	Down = 1,
 }
 
 // A psuedo element is used to calculate heightCollapsedControls as the window.height value changes
@@ -84,7 +96,7 @@ function addHeightElement(): HTMLElement {
 	return elem;
 }
 
-function getScrollDirection(previous: number, current: number): number {
+function getScrollDirection(previous: number, current: number): EScrollDirectionX | EScrollDirectionY {
 	if (previous < current) {
 		return 1;
 	}
