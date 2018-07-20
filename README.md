@@ -34,7 +34,9 @@ interface IViewportDetails {
   scrollX: number;
   scrollY: number;
   resized: boolean;
-  scrolled: boolean;
+	scrolled: boolean;
+	scrollDirectionX: number;
+	scrollDirectionY: number;
 }
 ```
 
@@ -44,3 +46,7 @@ _**heightCollapsedControls**_ is the height that the viewport will be once the u
 _**resized**_ represents whether the viewport resized since the previous animation frame.
 
 _**scrolled**_ represents whether the viewport scrolled since the previous animation frame.
+
+_**scrollDirectionX**_ Represents a the direction of scroll. 0 means no movement, 1 means scrolling to the right, and -1 means scrolling to the left.
+
+_**scrollDirectionY**_ Represents a the direction of scroll. 0 means no movement, 1 means scrolling down, and -1 means scrolling up.
