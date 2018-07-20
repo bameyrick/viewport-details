@@ -8,6 +8,7 @@ export interface IViewportDetails {
 	scrollY: number;
 	resized: boolean;
 	scrolled: boolean;
+	scrollDirection: number[];
 }
 
 // A psuedo element is used to calculate heightCollapsedControls as the window.height value changes
@@ -29,6 +30,7 @@ let previousWidth: number = width;
 let previousHeight: number = heightCollapsedControls;
 let previousScrollX: number = scrollX;
 let previousScrollY: number = scrollY;
+let scrollDirection: number[] = [0, 0];
 
 // Public functions
 export function GetViewportDetails(): IViewportDetails {
@@ -45,6 +47,7 @@ export function GetViewportDetails(): IViewportDetails {
 		scrollY,
 		resized,
 		scrolled,
+		scrollDirection,
 	};
 }
 
@@ -60,6 +63,7 @@ function setDetails(): void {
 	// Set resized and scrolled
 	resized = previousWidth !== width || previousHeight !== height;
 	scrolled = previousScrollX !== scrollX || previousScrollY !== scrollY;
+	scrollDirection = [getScrollDirection(previousScrollX, scrollX), getScrollDirection(previousScrollY, scrollY)];
 
 	// Set previous
 	previousWidth = width;
@@ -74,4 +78,16 @@ function addHeightElement(): HTMLElement {
 	elem.style.height = '100vh';
 	document.documentElement.appendChild(elem);
 	return elem;
+}
+
+function getScrollDirection(previous: number, current: number): number {
+	if (previous < current) {
+		return 1;
+	}
+
+	if (previous > current) {
+		return -1;
+	}
+
+	return 0;
 }
