@@ -42,7 +42,7 @@ let scrollDirectionY: number;
 
 // Previous State
 let previousWidth: number = width;
-let previousHeight: number = heightCollapsedControls;
+let previousHeight: number = height;
 let previousScrollX: number = scrollX;
 let previousScrollY: number = scrollY;
 
