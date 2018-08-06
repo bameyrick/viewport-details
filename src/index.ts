@@ -6,10 +6,13 @@ export interface IViewportDetails {
 	heightCollapsedControls: number;
 	scrollX: number;
 	scrollY: number;
+	orientation: string | number;
 	resized: boolean;
 	scrolled: boolean;
+	orientationChanged: boolean;
 	scrollDirectionX: EScrollDirectionX;
 	scrollDirectionY: EScrollDirectionY;
+	previous: IViewportDetails;
 }
 
 export enum EScrollDirectionX {
@@ -39,12 +42,16 @@ let resized: boolean = false;
 let scrolled: boolean = false;
 let scrollDirectionX: number;
 let scrollDirectionY: number;
+let orientation: string | number = window.orientation;
+let orientationChanged: boolean = false;
 
 // Previous State
+let previousState: IViewportDetails;
 let previousWidth: number = width;
 let previousHeight: number = height;
 let previousScrollX: number = scrollX;
 let previousScrollY: number = scrollY;
+let previousOrientation: string | number = orientation;
 
 // Public functions
 export function GetViewportDetails(): IViewportDetails {
@@ -53,17 +60,24 @@ export function GetViewportDetails(): IViewportDetails {
 		AddInitialTick(setDetails);
 	}
 
-	return {
+	const state = <IViewportDetails>{
 		width,
 		height,
 		heightCollapsedControls,
 		scrollX,
 		scrollY,
+		orientation,
 		resized,
 		scrolled,
+		orientationChanged,
 		scrollDirectionX,
 		scrollDirectionY,
+		previous: previousState,
 	};
+
+	previousState = state;
+
+	return state;
 }
 
 // Private functions
@@ -74,18 +88,21 @@ function setDetails(): void {
 	heightCollapsedControls = vhElem.offsetHeight;
 	scrollX = window.pageXOffset;
 	scrollY = window.pageYOffset;
+	orientation = window.orientation;
 
-	// Set resized and scrolled
+	// Set resized, scrolled, and orientation changed
 	resized = previousWidth !== width || previousHeight !== height;
 	scrolled = previousScrollX !== scrollX || previousScrollY !== scrollY;
 	scrollDirectionX = getScrollDirection(previousScrollX, scrollX);
 	scrollDirectionY = getScrollDirection(previousScrollY, scrollY);
+	orientationChanged = previousOrientation !== orientation;
 
 	// Set previous
 	previousWidth = width;
 	previousHeight = height;
 	previousScrollX = scrollX;
 	previousScrollY = scrollY;
+	previousOrientation = orientation;
 }
 
 function addHeightElement(): HTMLElement {

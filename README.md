@@ -32,11 +32,14 @@ interface IViewportDetails {
   height: number;
   heightCollapsedControls: number;
   scrollX: number;
-  scrollY: number;
+	scrollY: number;
+	orientation: string | number;
   resized: boolean;
-  scrolled: boolean;
+	scrolled: boolean;
+	orientationChanged: boolean;
   scrollDirectionX: number;
-  scrollDirectionY: number;
+	scrollDirectionY: number;
+	previous: IViewportDetails;
 }
 ```
 
