@@ -40,6 +40,7 @@ interface IViewportDetails {
   scrollDirectionX: number;
 	scrollDirectionY: number;
 	previous: IViewportDetails;
+	changed: boolean;
 }
 ```
 
