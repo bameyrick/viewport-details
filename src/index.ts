@@ -13,6 +13,7 @@ export interface IViewportDetails {
 	scrollDirectionX: EScrollDirectionX;
 	scrollDirectionY: EScrollDirectionY;
 	previous: IViewportDetails;
+	changed: boolean;
 }
 
 export enum EScrollDirectionX {
@@ -44,6 +45,7 @@ let scrollDirectionX: number;
 let scrollDirectionY: number;
 let orientation: string | number = window.orientation;
 let orientationChanged: boolean = false;
+let changed = false;
 
 // Previous State
 let previousState: IViewportDetails;
@@ -73,6 +75,7 @@ export function GetViewportDetails(): IViewportDetails {
 		scrollDirectionX,
 		scrollDirectionY,
 		previous: previousState,
+		changed,
 	};
 
 	previousState = state;
@@ -103,6 +106,8 @@ function setDetails(): void {
 	previousScrollX = scrollX;
 	previousScrollY = scrollY;
 	previousOrientation = orientation;
+
+	changed = resized || scrolled || orientationChanged;
 }
 
 function addHeightElement(): HTMLElement {
