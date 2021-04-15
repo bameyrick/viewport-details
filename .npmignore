@@ -1,7 +1,5 @@
-node_modules/
-*.log
-src/
-tsconfig.json
-tslint.json
-.gitignore
-.editorconfig
+*
+!/dist/**/*
+!/LICENSE
+!/package.json
+!/yarn.lock
