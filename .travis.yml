@@ -13,7 +13,7 @@ jobs:
       edge: true
       provider: npm
       email: bameyrick@gmail.com
-      api_token:
+      api_key:
         secure: IQwO8AVnivpIHEHysRhzuM5w98MKM5mGSiHmjs1hnCJj32wsO09ISMH97TCb9nlrk3by6adYjiInOryeUfeYK40yAOhKA5FQyof4c4UD0VAOeswm9q0wKF7alAk/mflTbo9JX+Gb9BmEOmkYV2hScY2avbXTD+U65rv61/iW6qAjuL3zbWgUWKWQUsad6+3F7rApBkTXHgfqp2MfiPftxJTgAL4dpCStcwlGvCIpVfjdfzQLOhRcItdT+BBgVRUzhE6fFFYv/Gqk2yJDoQbgKzV9a3ROBXUSc41UFr64RkYJobsRNLIVC93iMmyXORWUTumLMkG8DUmTaovBRC1drsVSuIGbU3W1sbCeN59oEuoL+hiRD2M6bBFanAl8ubT180uPj07Kp/c9+VjKf0WB2TRgfwerF1tHTj69yT9AxO69wgI6itVfV3lrTfUp95MMkgGTAtWUn8iramlcKekZ/oxRxJzAJbp1nSNNOlK3Sh40jZZ/+cOP4el8xMLkXXp/whzNGtB8dB1kvZUS3L2pWuBeI6fIPP1FyiwnzJvGfAnefQW0jCX1iYS4gaXrZAOapnIBaw6D43NHdAk3IXwKJe8J5mArD8jit/1eMJ7/p6xWuKdL5qSw9VROsGc0inHGMLuBxWzZUmVQBfbWfva04auDqSxc+IadDrodLLAYFnE=
       on:
         tags: true
