@@ -100,7 +100,7 @@ interface ViewportDetails {
 }
 ```
 
-#### Note:
+#### Note
 
 `heightCollapsedControls` is the height that the viewport will be once the user has scrolled and the browser controlls shrink, such as on iOS Safari.
 
