@@ -1,31 +1,70 @@
-import { AddInitialTick } from 'tick-manager';
+export interface ViewportDetails {
+  /**
+   * The width of the viewport
+   */
+  width: number;
 
-export interface IViewportDetails {
-	width: number;
-	height: number;
-	heightCollapsedControls: number;
-	scrollX: number;
-	scrollY: number;
-	orientation: string | number;
-	resized: boolean;
-	scrolled: boolean;
-	orientationChanged: boolean;
-	scrollDirectionX: EScrollDirectionX;
-	scrollDirectionY: EScrollDirectionY;
-	previous: IViewportDetails;
-	changed: boolean;
+  /**
+   * The height of the viewport
+   */
+  height: number;
+
+  /**
+   * The hight of the viewport if the browser controlls have collapsed (e.g. in iOS Safari)
+   */
+  heightCollapsedControls: number;
+
+  /**
+   * The scroll x position of the viewport
+   */
+  scrollX: number;
+
+  /**
+   * The scroll y position of the viewport
+   */
+  scrollY: number;
+
+  /**
+   * Whether the viewport has resized since the last time getViewportDetails was called
+   */
+  resized: boolean;
+
+  /**
+   * Whether the viewport scrolled since the last time getViewportDetails was called
+   */
+  scrolled: boolean;
+
+  /**
+   * The direction in which the user is scrolling on the x axis
+   */
+  scrollDirectionX: ScrollDirectionX;
+
+  /**
+   * The direction in which the user is scrolling on the y axis
+   */
+  scrollDirectionY: ScrollDirectionY;
+
+  /**
+   * The previous getViewportDetails result
+   */
+  previous?: ViewportDetails;
+
+  /**
+   * Whether any of the values have changes since the last time getViewport details was called
+   */
+  changed?: boolean;
 }
 
-export enum EScrollDirectionX {
-	Left = -1,
-	None = 0,
-	Right = 1,
+export enum ScrollDirectionX {
+  Left = -1,
+  None = 0,
+  Right = 1,
 }
 
-export enum EScrollDirectionY {
-	Up = -1,
-	None = 0,
-	Down = 1,
+export enum ScrollDirectionY {
+  Up = -1,
+  None = 0,
+  Down = 1,
 }
 
 // A psuedo element is used to calculate heightCollapsedControls as the window.height value changes
@@ -33,99 +72,88 @@ export enum EScrollDirectionY {
 const vhElem: HTMLElement = addHeightElement();
 
 // State
-let initialised: boolean = false;
-let width: number = window.innerWidth;
-let heightCollapsedControls: number = vhElem.offsetHeight;
-let height: number = window.innerHeight;
-let scrollX: number = window.pageXOffset;
-let scrollY: number = window.pageYOffset;
-let resized: boolean = false;
-let scrolled: boolean = false;
-let scrollDirectionX: number;
-let scrollDirectionY: number;
-let orientation: string | number = window.orientation;
-let orientationChanged: boolean = false;
-let changed = false;
+let state: ViewportDetails = {
+  width: window.innerWidth,
+  heightCollapsedControls: vhElem.offsetHeight,
+  height: window.innerHeight,
+  scrollX: window.pageXOffset,
+  scrollY: window.pageYOffset,
+  resized: false,
+  scrolled: false,
+  scrollDirectionX: ScrollDirectionX.None,
+  scrollDirectionY: ScrollDirectionY.None,
+  changed: false,
+};
 
-// Previous State
-let previousState: IViewportDetails;
-let previousWidth: number = width;
-let previousHeight: number = height;
-let previousScrollX: number = scrollX;
-let previousScrollY: number = scrollY;
-let previousOrientation: string | number = orientation;
+/**
+ * Gets the current state of the viewport
+ * @returns ViewportDetails
+ */
+export function getViewportDetails(): ViewportDetails {
+  setDetails();
 
-// Public functions
-export function GetViewportDetails(): IViewportDetails {
-	if (!initialised) {
-		initialised = true;
-		AddInitialTick(setDetails);
-	}
-
-	const state = <IViewportDetails>{
-		width,
-		height,
-		heightCollapsedControls,
-		scrollX,
-		scrollY,
-		orientation,
-		resized,
-		scrolled,
-		orientationChanged,
-		scrollDirectionX,
-		scrollDirectionY,
-		previous: previousState,
-		changed,
-	};
-
-	previousState = state;
-
-	return state;
+  return state;
 }
 
-// Private functions
+/**
+ * Updates the details
+ */
 function setDetails(): void {
-	// Set current
-	width = window.innerWidth;
-	height = window.innerHeight;
-	heightCollapsedControls = vhElem.offsetHeight;
-	scrollX = window.pageXOffset;
-	scrollY = window.pageYOffset;
-	orientation = window.orientation;
+  const previous = { ...state };
 
-	// Set resized, scrolled, and orientation changed
-	resized = previousWidth !== width || previousHeight !== height;
-	scrolled = previousScrollX !== scrollX || previousScrollY !== scrollY;
-	scrollDirectionX = getScrollDirection(previousScrollX, scrollX);
-	scrollDirectionY = getScrollDirection(previousScrollY, scrollY);
-	orientationChanged = previousOrientation !== orientation;
+  delete previous.previous;
+  delete previous.changed;
 
-	// Set previous
-	previousWidth = width;
-	previousHeight = height;
-	previousScrollX = scrollX;
-	previousScrollY = scrollY;
-	previousOrientation = orientation;
+  // Get current
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const heightCollapsedControls = vhElem.offsetHeight;
+  const scrollX = window.pageXOffset;
+  const scrollY = window.pageYOffset;
+  const resized = previous.width !== width || previous.height !== height;
+  const scrolled = previous.scrollX !== scrollX || previous.scrollY !== scrollY;
 
-	changed = resized || scrolled || orientationChanged;
+  state = {
+    width,
+    height,
+    heightCollapsedControls,
+    scrollX,
+    scrollY,
+    scrollDirectionX: getScrollDirection(previous.scrollX, scrollX) as ScrollDirectionX,
+    scrollDirectionY: getScrollDirection(previous.scrollY, scrollY) as ScrollDirectionY,
+    resized,
+    scrolled,
+    changed: resized || scrolled,
+    previous,
+  };
 }
 
+/**
+ * Adds a HTML element to the view that is the exact same height as the viewport. This is used for calculating the height of the element if
+ * the viewport controls were collapsed
+ * @returns HTMLElement
+ */
 function addHeightElement(): HTMLElement {
-	const elem: HTMLElement = document.createElement('div');
-	elem.style.position = 'fixed';
-	elem.style.height = '100vh';
-	document.documentElement.appendChild(elem);
-	return elem;
+  const element: HTMLElement = document.createElement('div');
+
+  element.style.position = 'fixed';
+  element.style.height = '100vh';
+  document.documentElement.appendChild(element);
+
+  return element;
 }
 
-function getScrollDirection(previous: number, current: number): EScrollDirectionX | EScrollDirectionY {
-	if (previous < current) {
-		return 1;
-	}
+/**
+ * Gets the direction in which the user is scrolling
+ */
+function getScrollDirection(previous: number, current: number): ScrollDirectionX | ScrollDirectionY {
+  if (previous < current) {
+    return 1;
+  }
 
-	if (previous > current) {
-		return -1;
-	}
+  if (previous > current) {
+    return -1;
+  }
 
-	return 0;
+  return 0;
 }
