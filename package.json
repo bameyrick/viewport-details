@@ -15,9 +15,6 @@
     "type": "git",
     "url": "git+https://github.com/bameyrick/viewport-details.git"
   },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
-  },
   "scripts": {
     "build": " yarn lint && tsc -p tsconfig.json --outDir dist/",
     "test": "KARMA_SINGLE_RUN=false karma start ./karma.conf.js",
