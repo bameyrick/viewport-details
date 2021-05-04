@@ -1,7 +1,6 @@
 language: node_js
-version: "~> 1.0.0"
 node_js:
-- 12.18.3
+- 14.16.1
 cache: yarn
 jobs:
   include:
@@ -14,7 +13,7 @@ jobs:
       provider: npm
       email: bameyrick@gmail.com
       api_key:
-        secure: BjBo1bsahzedU6dgGIE89eYZ7kTPZVdS7ZKmc98cYuEiYQnt9/kMzADv+dbhANZtlNnnvQ36bQMeHicc5uRVE9aN8Yy6IzEKtIUuNr6Rvt7o/B/qhpfsdxEkb1UACDuFJfQAvo0RHu/OBnQbeshbrJZBLvyqHxFQdP/lJwFThoroEmsJxv6QkOBncicwS+6+jsPzGHEMVQN+ni1xxb8LptVcaQLD/ZHxw6gSnda53K0pYjwv5kuQUZVMQh4MV5CBSv8kzTRsx9LGIbobWLALovMWWrdi3pGG17s9K1AUKnmRNHUNfkCagOeIB8MjFl0ecfqRq7wllJomF6OT9bUWLK3cILY1u5jCp/BXcnBY9Y7jBvM1EEu/XjKEbbyYcovb5+lu+yGKhEYapoyS3bI1f1dh2sREAkf+4eWAekCecybIwCwQtBNKTPNFCia2ks4QMttYppRvBlfbLQAPfHPUnssrl5BedvAdIzGHo5Lbp+0TJPNkopLYoDa13BQh4iAWsQwmKf8BqcVUMjioSPy7qF0Phd6Z+J2eBEFXYe1XEOzYq6fnBxC7jc+MkVONK6jPDnBY/fZiYK3lKPV5gFmNpkCa9t5WK9YUeWzNt6NOFphzhJznH/HaH91Zdf1dTpIYjEWTKMQ9AZ0VT8g+9EyFDMNonc3YhXqxxO8DOReFh/0=
+        secure: bE5Z+93MtAR9vLrH8Ortk0nvADKdSlI1qS+/NYKIWxWI1oG2ut58dZQGASHcaOCa/ytxkiMn+kFicLG7NuThgEfODkQJMFDXjhNXWP98I5OBPwv9GtbYa1OhvpSvULHQ8AfQs/b6/YiVziLWkz7w/efpGXRMSPGtHRpQ5RLYXOsrqyTB1Zike/vbzuZh9ZGm/GdC1xsJZhHZeBVMHO8CN6zPdIdq84IYKzBdWFJVrrEEDF5Nrs3NVUhuEsU1bixvkKIfX4ImdXhAbaatwGq61jZiBerwAfb28JwjbrGVNThMTNIhHdCAAifxFpPVwiFjqoBbGr7QLRo/ZCsLWy7uIi0xEvVtmnA6Lk4LAX2rnrylSLU+6b4YvGru+VJuOKbNkLAIj34NOd3EhVhksUDMkvhB8wZWhc4vQDGtes+7tXrI1GSTjgvEnUdxr5z5kEucbyYaQSiwnzgRTL+Rb9/BhfzxSPpZJ7Ydv085d/O+Nsia2ycDCNSC+RUNoAD4pP+iFVS6sk7lB2dzX2mkxTayPAPE+5oYMVJYSECYaDtLSjxJqBt98vir3S/X3RvBdXLaRV+SXr5TwZt1uwWA6CB0OY9cKTGKcBV1nQYjCNqouXZiVwflYdNjf+G3hRnFgP9iEvAiAFxkVUnveJtZVhUPzb+QVtrxZAUsgzoHH0xcTEA=
       on:
         tags: true
 stages:
