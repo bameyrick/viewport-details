@@ -17,7 +17,7 @@
     "test-single": "yarn tidy-clean && yarn lint && yarn karma start ./karma.conf.js",
     "lint": "tslint --project tsconfig.lint.json",
     "tidy-clean": "rm -rf dist coverage",
-    "postinstall": "husky install",
+    "prepare-husky": "npx husky-init && yarn",
     "pre-commit": "lint-staged && yarn test-single"
   },
   "lint-staged": {
