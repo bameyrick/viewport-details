@@ -12,7 +12,7 @@ export interface ViewportDetails {
   /**
    * The hight of the viewport if the browser controlls have collapsed (e.g. in iOS Safari)
    */
-  heightCollapsedControls?: number;
+  heightCollapsedControls: number;
 
   /**
    * The scroll x position of the viewport
@@ -35,12 +35,12 @@ export interface ViewportDetails {
   scrolled: boolean;
 
   /**
-   * The direction in which the user is scrolling on the x axis
+   * The direction in which the user is scrolling on the x axis. (This will not update until getViewportDetails has been called once)
    */
   scrollDirectionX: ScrollDirectionX;
 
   /**
-   * The direction in which the user is scrolling on the y axis
+   * The direction in which the user is scrolling on the y axis. (This will not update until getViewportDetails has been called once)
    */
   scrollDirectionY: ScrollDirectionY;
 
