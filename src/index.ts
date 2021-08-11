@@ -12,7 +12,7 @@ export interface ViewportDetails {
   /**
    * The hight of the viewport if the browser controlls have collapsed (e.g. in iOS Safari)
    */
-  heightCollapsedControls: number;
+  heightCollapsedControls?: number;
 
   /**
    * The scroll x position of the viewport
@@ -69,21 +69,10 @@ export enum ScrollDirectionY {
 
 // A psuedo element is used to calculate heightCollapsedControls as the window.height value changes
 // on iOS as the user scrolls and the browser chrome shrinks
-const vhElem: HTMLElement = addHeightElement();
+let vhElement: HTMLElement;
 
 // State
-let state: ViewportDetails = {
-  width: window.innerWidth,
-  heightCollapsedControls: vhElem.offsetHeight,
-  height: window.innerHeight,
-  scrollX: window.pageXOffset,
-  scrollY: window.pageYOffset,
-  resized: false,
-  scrolled: false,
-  scrollDirectionX: ScrollDirectionX.None,
-  scrollDirectionY: ScrollDirectionY.None,
-  changed: false,
-};
+let state: ViewportDetails;
 
 /**
  * Gets the current state of the viewport
@@ -99,19 +88,25 @@ export function getViewportDetails(): ViewportDetails {
  * Updates the details
  */
 function setDetails(): void {
-  const previous = { ...state };
+  let previous: ViewportDetails | undefined;
 
-  delete previous.previous;
-  delete previous.changed;
+  if (state) {
+    previous = { ...state };
+
+    delete previous.previous;
+    delete previous.changed;
+  } else {
+    vhElement = addHeightElement();
+  }
 
   // Get current
   const width = window.innerWidth;
   const height = window.innerHeight;
-  const heightCollapsedControls = vhElem.offsetHeight;
+  const heightCollapsedControls = vhElement.offsetHeight;
   const scrollX = window.pageXOffset;
   const scrollY = window.pageYOffset;
-  const resized = previous.width !== width || previous.height !== height;
-  const scrolled = previous.scrollX !== scrollX || previous.scrollY !== scrollY;
+  const resized = previous ? previous.width !== width || previous.height !== height : false;
+  const scrolled = previous ? previous.scrollX !== scrollX || previous.scrollY !== scrollY : false;
 
   state = {
     width,
@@ -119,8 +114,8 @@ function setDetails(): void {
     heightCollapsedControls,
     scrollX,
     scrollY,
-    scrollDirectionX: getScrollDirection(previous.scrollX, scrollX) as ScrollDirectionX,
-    scrollDirectionY: getScrollDirection(previous.scrollY, scrollY) as ScrollDirectionY,
+    scrollDirectionX: previous ? (getScrollDirection(previous.scrollX, scrollX) as ScrollDirectionX) : ScrollDirectionX.None,
+    scrollDirectionY: previous ? (getScrollDirection(previous.scrollY, scrollY) as ScrollDirectionY) : ScrollDirectionY.None,
     resized,
     scrolled,
     changed: resized || scrolled,
