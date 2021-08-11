@@ -18,10 +18,10 @@
     "lint": "tslint --project tsconfig.lint.json",
     "tidy-clean": "rm -rf dist coverage",
     "postinstall": "husky install",
-    "pre-commit": "lint-staged && yarn test-single"
+    "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.ts": ["yarn lint", "prettier --print-width 140 --single-quote --trailing-comma es5 --parser typescript --write"],
+    "*.ts": ["yarn lint", "prettier --print-width 140 --single-quote --trailing-comma es5 --parser typescript --write", "yarn test-single"],
     "*.json": ["prettier --print-width 140 --single-quote --trailing-comma es5 --parser json --write"]
   },
   "devDependencies": {
