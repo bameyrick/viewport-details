@@ -129,11 +129,18 @@ function setDetails(): void {
  * @returns HTMLElement
  */
 function addHeightElement(): HTMLElement {
-  const element: HTMLElement = document.createElement('div');
+  const id = 'viewport-details-height-element';
 
-  element.style.position = 'fixed';
-  element.style.height = '100vh';
-  document.documentElement.appendChild(element);
+  let element: HTMLElement | null = document.getElementById(id);
+
+  if (!element) {
+    element = document.createElement('div');
+    element.id = id;
+
+    element.style.position = 'fixed';
+    element.style.height = '100vh';
+    document.documentElement.appendChild(element);
+  }
 
   return element;
 }
